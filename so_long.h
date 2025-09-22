@@ -6,7 +6,7 @@
 /*   By: mkeerewe <mkeerewe@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 16:39:42 by mkeerewe          #+#    #+#             */
-/*   Updated: 2025/09/20 12:11:51 by mkeerewe         ###   ########.fr       */
+/*   Updated: 2025/09/22 11:43:14 by mkeerewe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ typedef struct s_sprites
 typedef struct s_window
 {
 	void		*win;
-	t_image		img_to_win;
+	t_image		*buffer;
 	t_vector	size;
 }	t_window;
 

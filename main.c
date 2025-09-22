@@ -6,7 +6,7 @@
 /*   By: mkeerewe <mkeerewe@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 11:19:39 by mkeerewe          #+#    #+#             */
-/*   Updated: 2025/09/20 12:39:55 by mkeerewe         ###   ########.fr       */
+/*   Updated: 2025/09/22 11:52:08 by mkeerewe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ static void	ft_new_window(t_program *prog)
 	prog->window.size.x = 64 * prog->map->size.x;
 	prog->window.size.y = 64 * prog->map->size.y + 32;
 	prog->window.win = mlx_new_window(prog->mlx,
-	prog->window.size.x, prog->window.size.y, "so_long");
+			prog->window.size.x, prog->window.size.y, "so_long");
 }
 
 int	main(int argc, char *argv[])

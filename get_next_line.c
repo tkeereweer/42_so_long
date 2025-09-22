@@ -6,26 +6,40 @@
 /*   By: mkeerewe <mkeerewe@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/06 18:13:12 by mkeerewe          #+#    #+#             */
-/*   Updated: 2025/09/19 11:27:34 by mkeerewe         ###   ########.fr       */
+/*   Updated: 2025/09/21 16:42:35 by mkeerewe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static int	eol_found(char *line)
+static int	init_var(char **line, int fd, char **out, int mode)
 {
-	int	i;
+	int	cnt;
 
-	i = 0;
-	if (line == (void *) 0)
-		return (-1);
-	while (line[i] != '\0')
+	if (mode == 0)
 	{
-		if (line[i] == '\n')
-			return (i);
-		i++;
+		*line = ft_realloc_gnl(*line, BUFFER_SIZE + 1);
+		if (*line == (void *) 0)
+			return (0);
+		cnt = read(fd, *line, BUFFER_SIZE);
+		line[0][cnt] = '\0';
+		return (1);
 	}
-	return (-1);
+	else
+	{
+		*out = (char *) malloc(1 * sizeof(char));
+		if (*out == (void *) 0)
+			return (0);
+		out[0][0] = '\0';
+		return (1);
+	}
+}
+
+static char	*ret_null(char *out)
+{
+	free(out);
+	out = (void *) 0;
+	return (out);
 }
 
 static char	*return_line(char *out, char *line)
@@ -38,37 +52,41 @@ static char	*return_line(char *out, char *line)
 	return (out);
 }
 
+static int	read_line(char **out, char *line, int fd)
+{
+	int	cnt;
+
+	*out = ft_realloc_gnl(*out, ft_strlen_gnl(*out) + ft_strlen_gnl(line) + 1);
+	if (*out == (void *) 0)
+		return (-1);
+	ft_strncat_gnl(*out, line, ft_strlen_gnl(line));
+	cnt = read(fd, line, BUFFER_SIZE);
+	line[cnt] = '\0';
+	return (cnt);
+}
+
 char	*get_next_line(int fd)
 {
 	char			*out;
 	static char		*line;
 	int				cnt;
-	// static size_t	len_line = 0;
 
-	out = (void *) 0;
-	line = ft_realloc_gnl(line, BUFFER_SIZE + 1);
-	if (line == (void *) 0)
-		return (line);
+	if (line == 0)
+	{
+		if (init_var(&line, fd, (void *) 0, 0) == 0)
+			return (line);
+	}
 	cnt = -2;
+	if (init_var((void *) 0, fd, &out, 1) == 0)
+		return (out);
 	while (cnt != 0 && cnt != -1)
 	{
 		if (eol_found(line) != -1)
-		{
 			return (return_line(out, line));
-		}
-		out = ft_realloc_gnl(out, ft_strlen_gnl(out) + ft_strlen_gnl(line) + 1);
-		if (out == (void *) 0)
-			return (out);
-		ft_strncat_gnl(out, line, ft_strlen_gnl(line));
-		cnt = read(fd, line, BUFFER_SIZE);
-		line[cnt] = '\0';
+		cnt = read_line(&out, line, fd);
 	}
-	// free(line);
 	if (ft_strlen_gnl(out) == 0)
-	{
-		free(out);
-		out = (void *) 0;
-	}
+		out = ret_null(out);
 	return (out);
 }
 

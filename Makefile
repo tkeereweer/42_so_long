@@ -13,7 +13,7 @@ LIBFT = $(LIBFT_DIR)/libft.a
 NAME = so_long
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g -O0 # -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g -O0 -fsanitize=address
 LINKS = -L/opt/X11/lib -lX11 -lXext -lmlx_Darwin -L$(LIBFT_DIR) -lft -framework OpenGL -framework AppKit
 
 all: $(NAME)
