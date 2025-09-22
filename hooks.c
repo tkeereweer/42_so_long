@@ -6,13 +6,13 @@
 /*   By: mkeerewe <mkeerewe@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 13:35:11 by mkeerewe          #+#    #+#             */
-/*   Updated: 2025/09/22 15:19:00 by mkeerewe         ###   ########.fr       */
+/*   Updated: 2025/09/22 15:36:47 by mkeerewe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-static int	ft_close(t_map *map)
+int	ft_close(t_map *map)
 {
 	ft_free_2d(map->map, map);
 	exit(0);

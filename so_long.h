@@ -6,7 +6,7 @@
 /*   By: mkeerewe <mkeerewe@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 16:39:42 by mkeerewe          #+#    #+#             */
-/*   Updated: 2025/09/22 15:25:34 by mkeerewe         ###   ########.fr       */
+/*   Updated: 2025/09/22 15:36:21 by mkeerewe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,5 +88,6 @@ void	ft_get_sprites(t_program *prog);
 void	ft_put_map(t_program *prog);
 int		ft_key_input(int key, void *param);
 int		ft_update(void *param);
+int		ft_close(t_map *map);
 
 #endif

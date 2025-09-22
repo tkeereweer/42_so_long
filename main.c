@@ -6,7 +6,7 @@
 /*   By: mkeerewe <mkeerewe@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 11:19:39 by mkeerewe          #+#    #+#             */
-/*   Updated: 2025/09/22 15:25:38 by mkeerewe         ###   ########.fr       */
+/*   Updated: 2025/09/22 15:36:46 by mkeerewe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ int	main(int argc, char *argv[])
 	ft_new_window(&prog);
 	ft_put_map(&prog);
 	mlx_key_hook(prog.window.win, *ft_key_input, &prog);
+	mlx_hook(prog.window.win, 17, 0, *ft_close, prog.map);
 	mlx_loop_hook(prog.mlx, *ft_update, &prog);
 	mlx_loop(prog.mlx);
 }
