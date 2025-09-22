@@ -6,7 +6,7 @@
 /*   By: mkeerewe <mkeerewe@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 11:19:39 by mkeerewe          #+#    #+#             */
-/*   Updated: 2025/09/22 11:52:08 by mkeerewe         ###   ########.fr       */
+/*   Updated: 2025/09/22 15:25:38 by mkeerewe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,20 @@ char	**ft_realloc(char **strs, int size)
 	out = (char **) malloc(size * sizeof(char *));
 	if (out == (void *) 0)
 		return (out);
-	out = (char **) ft_memmove(out, strs, size - sizeof(char *));
+	if (strs != (void *) 0)
+		out = (char **) ft_memmove(out, strs, size - sizeof(char *));
+	free(strs);
 	return (out);
+}
+
+void	read_file(t_program *prog, char **line, int fd, int i)
+{
+	prog->map->map = ft_realloc(prog->map->map, (i + 1) * sizeof(char *));
+	if (prog->map->map == (void *) 0)
+		return ;
+	*line = get_next_line(fd);
+	if (*line != (void *) 0)
+		prog->map->map[i] = ft_strdup(*line);
 }
 
 void	ft_get_map(char *file, t_program *prog)
@@ -57,30 +69,12 @@ void	ft_get_map(char *file, t_program *prog)
 	prog->map->map[0] = ft_strdup(line);
 	while (line != (void *) 0)
 	{
-		prog->map->map = ft_realloc(prog->map->map, (i + 1) * sizeof(char *));
-		if (prog->map->map == (void *) 0)
-			return ;
-		line = get_next_line(fd);
-		if (line != (void *) 0)
-			prog->map->map[i] = ft_strdup(line);
+		read_file(prog, &line, fd, i);
 		i++;
 	}
-	prog->map->size.x = ft_strlen(prog->map->map[0]) - 1;
+	prog->map->size.x = ft_strlen_sl(prog->map->map[0]);
 	prog->map->size.y = i - 1;
 	close(fd);
-}
-
-void	ft_free_2d(char **strs, t_map *map)
-{
-	int	i;
-
-	i = 0;
-	while (i < map->size.y)
-	{
-		free(strs[i]);
-		i++;
-	}
-	free(strs);
 }
 
 static void	ft_new_window(t_program *prog)
@@ -105,12 +99,10 @@ int	main(int argc, char *argv[])
 	prog.map->coll_cnt = 0;
 	prog.map->player_on_exit = 0;
 	prog.map->coll_found = 0;
-	// get map size from read file
-	// prog.map->size.x = 13;
-	// prog.map->size.y = 5;
+	prog.map->player_cnt = 0;
+	prog.map->exit_cnt = 0;
 	ft_valid_map(prog.map);
-	// prog.map->player_pos.x = 1;
-	// prog.map->player_pos.y = 3;
+	prog.move_cnt = 1;
 	ft_new_window(&prog);
 	ft_put_map(&prog);
 	mlx_key_hook(prog.window.win, *ft_key_input, &prog);

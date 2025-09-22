@@ -1,5 +1,7 @@
 SRCS = main.c \
+	so_long_utils.c \
 	check_map.c \
+	check_map2.c \
 	render_map.c \
 	hooks.c \
 	get_next_line_utils.c \

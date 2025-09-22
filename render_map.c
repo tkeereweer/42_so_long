@@ -6,21 +6,11 @@
 /*   By: mkeerewe <mkeerewe@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 11:50:17 by mkeerewe          #+#    #+#             */
-/*   Updated: 2025/09/22 12:01:57 by mkeerewe         ###   ########.fr       */
+/*   Updated: 2025/09/22 15:25:35 by mkeerewe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
-static t_image	ft_new_sprite(void *mlx, char *path)
-{
-	t_image	img;
-
-	img.pointer = mlx_xpm_file_to_image(mlx, path, &img.size.x, &img.size.y);
-	img.pixels = mlx_get_data_addr(img.pointer, &img.bits_per_pixel,
-			&img.line_size, &img.endian);
-	return (img);
-}
 
 void	draw_image_to_buffer(t_image *dst, t_image *src, int dx, int dy)
 {
@@ -75,6 +65,22 @@ void	ft_put_background(t_program *prog)
 	// mlx_string_put(prog->mlx, prog->window.win, prog->window.size.x / 2, 8, 0x00000000, "Hello");
 }
 
+void	ft_map_to_buffer(t_program *prog, int *i, int *j)
+{
+	if (prog->map->map[*i][*j] == 'P')
+		draw_image_to_buffer(prog->window.buffer,
+			&prog->sprites.img_player, 64 * *j, 64 * *i + 32);
+	else if (prog->map->map[*i][*j] == 'C')
+		draw_image_to_buffer(prog->window.buffer,
+			&prog->sprites.img_coll, 64 * *j, 64 * *i + 32);
+	else if (prog->map->map[*i][*j] == 'E')
+		draw_image_to_buffer(prog->window.buffer,
+			&prog->sprites.img_exit, 64 * *j, 64 * *i + 32);
+	else if (prog->map->map[*i][*j] == '1')
+		draw_image_to_buffer(prog->window.buffer,
+			&prog->sprites.img_walls, 64 * *j, 64 * *i + 32);
+}
+
 void	ft_put_map(t_program *prog)
 {
 	int		i;
@@ -95,18 +101,7 @@ void	ft_put_map(t_program *prog)
 		j = 0;
 		while (prog->window.size.x > 64 * j)
 		{
-			if (prog->map->map[i][j] == 'P')
-				draw_image_to_buffer(prog->window.buffer,
-					&prog->sprites.img_player, 64 * j, 64 * i + 32);
-			else if (prog->map->map[i][j] == 'C')
-				draw_image_to_buffer(prog->window.buffer,
-					&prog->sprites.img_coll, 64 * j, 64 * i + 32);
-			else if (prog->map->map[i][j] == 'E')
-				draw_image_to_buffer(prog->window.buffer,
-					&prog->sprites.img_exit, 64 * j, 64 * i + 32);
-			else if (prog->map->map[i][j] == '1')
-				draw_image_to_buffer(prog->window.buffer,
-					&prog->sprites.img_walls, 64 * j, 64 * i + 32);
+			ft_map_to_buffer(prog, &i, &j);
 			j++;
 		}
 		i++;
