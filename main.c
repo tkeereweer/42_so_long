@@ -6,7 +6,7 @@
 /*   By: mkeerewe <mkeerewe@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 11:19:39 by mkeerewe          #+#    #+#             */
-/*   Updated: 2025/09/22 15:36:46 by mkeerewe         ###   ########.fr       */
+/*   Updated: 2025/09/26 11:20:42 by mkeerewe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	ft_get_map(char *file, t_program *prog)
 	line = (void *) 0;
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
-		return ;
+		exit(1);
 	map = (char **) malloc(1 * sizeof(char *));
 	if (map == (void *) 0)
 		return ;
