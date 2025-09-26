@@ -6,7 +6,7 @@
 /*   By: mkeerewe <mkeerewe@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 15:20:25 by mkeerewe          #+#    #+#             */
-/*   Updated: 2025/09/22 15:25:36 by mkeerewe         ###   ########.fr       */
+/*   Updated: 2025/09/26 11:25:13 by mkeerewe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ t_image	ft_new_sprite(void *mlx, char *path)
 	t_image	img;
 
 	img.pointer = mlx_xpm_file_to_image(mlx, path, &img.size.x, &img.size.y);
+	if (img.pointer == (void *) 0)
+		exit(1);
 	img.pixels = mlx_get_data_addr(img.pointer, &img.bits_per_pixel,
 			&img.line_size, &img.endian);
 	return (img);
