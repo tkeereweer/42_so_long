@@ -6,11 +6,25 @@
 /*   By: mkeerewe <mkeerewe@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 15:13:49 by mkeerewe          #+#    #+#             */
-/*   Updated: 2025/09/22 15:15:07 by mkeerewe         ###   ########.fr       */
+/*   Updated: 2025/10/06 14:54:28 by mkeerewe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
+int	ft_valid_rectangle(t_map *map)
+{
+	int	i;
+
+	i = 0;
+	while (i < map->size.y)
+	{
+		if (ft_strlen_sl(map->map[i]) != map->size.x)
+			return (0);
+		i++;
+	}
+	return (1);
+}
 
 int	ft_valid_walls(t_map *map)
 {

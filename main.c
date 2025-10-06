@@ -6,7 +6,7 @@
 /*   By: mkeerewe <mkeerewe@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 11:19:39 by mkeerewe          #+#    #+#             */
-/*   Updated: 2025/10/06 14:37:50 by mkeerewe         ###   ########.fr       */
+/*   Updated: 2025/10/06 14:55:14 by mkeerewe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,6 @@ int	main(int argc, char *argv[])
 	if (argc != 2)
 		exit(0);
 	prog.mlx = mlx_init();
-	ft_get_sprites(&prog);
 	prog.map = &map;
 	ft_get_map(argv[1], &prog);
 	prog.map->coll_cnt = 0;
@@ -102,7 +101,8 @@ int	main(int argc, char *argv[])
 	prog.map->coll_found = 0;
 	prog.map->player_cnt = 0;
 	prog.map->exit_cnt = 0;
-	ft_valid_map(prog.map);
+	ft_valid_map(&prog);
+	ft_get_sprites(&prog);
 	prog.move_cnt = 1;
 	ft_new_window(&prog);
 	mlx_loop_hook(prog.mlx, *ft_update, &prog);

@@ -6,25 +6,11 @@
 /*   By: mkeerewe <mkeerewe@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 10:49:02 by mkeerewe          #+#    #+#             */
-/*   Updated: 2025/09/22 15:21:02 by mkeerewe         ###   ########.fr       */
+/*   Updated: 2025/10/06 14:54:36 by mkeerewe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
-static int	ft_valid_rectangle(t_map *map)
-{
-	int	i;
-
-	i = 0;
-	while (i < map->size.y)
-	{
-		if (ft_strlen_sl(map->map[i]) != map->size.x)
-			return (0);
-		i++;
-	}
-	return (1);
-}
 
 static int	ft_check_items(t_map *map, int *i, int *j)
 {
@@ -65,30 +51,24 @@ static int	ft_valid_items(t_map *map)
 	return (1);
 }
 
-void	ft_valid_map(t_map *map)
+static void	ft_map_error(char *error_msg, t_program *prog)
 {
-	if (ft_valid_rectangle(map) != 1)
-	{
-		ft_putstr_fd("Error\nInvalid map", 1);
-		ft_free_2d(map->map, map);
-		exit(0);
-	}
-	else if (ft_valid_items(map) != 1)
-	{
-		ft_putstr_fd("Error\nInvalid map", 1);
-		ft_free_2d(map->map, map);
-		exit(0);
-	}
-	if (ft_valid_walls(map) != 1)
-	{
-		ft_putstr_fd("Error\nInvalid map", 1);
-		ft_free_2d(map->map, map);
-		exit(0);
-	}
-	if (ft_valid_path(map) != 1)
-	{
-		ft_putstr_fd("Error\nInvalid map", 1);
-		ft_free_2d(map->map, map);
-		exit(0);
-	}
+	ft_putstr_fd("Error\n", 2);
+	ft_putstr_fd(error_msg, 2);
+	ft_free_2d(prog->map->map, prog->map);
+	mlx_destroy_display(prog->mlx);
+	free(prog->mlx);
+	exit(1);
+}
+
+void	ft_valid_map(t_program *prog)
+{
+	if (ft_valid_rectangle(prog->map) != 1)
+		ft_map_error("The map is not a rectangle", prog);
+	else if (ft_valid_items(prog->map) != 1)
+		ft_map_error("The map does not have all valid items", prog);
+	if (ft_valid_walls(prog->map) != 1)
+		ft_map_error("The map is not enclosed by walls", prog);
+	if (ft_valid_path(prog->map) != 1)
+		ft_map_error("There is no valid path to finish the game", prog);
 }

@@ -6,7 +6,7 @@
 /*   By: mkeerewe <mkeerewe@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 16:39:42 by mkeerewe          #+#    #+#             */
-/*   Updated: 2025/10/06 12:56:10 by mkeerewe         ###   ########.fr       */
+/*   Updated: 2025/10/06 14:55:01 by mkeerewe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,10 +78,11 @@ typedef struct s_program
 }	t_program;
 
 int		ft_strlen_sl(const char *s);
+int		ft_valid_rectangle(t_map *map);
 int		ft_valid_walls(t_map *map);
 void	ft_flood_fill(t_map *map, t_path *path, int i, int j);
 int		ft_valid_path(t_map *map);
-void	ft_valid_map(t_map *map);
+void	ft_valid_map(t_program *prog);
 void	ft_free_2d(char **strs, t_map *map);
 t_image	ft_new_sprite(void *mlx, char *path);
 void	ft_get_sprites(t_program *prog);
