@@ -6,7 +6,7 @@
 /*   By: mkeerewe <mkeerewe@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 11:19:39 by mkeerewe          #+#    #+#             */
-/*   Updated: 2025/09/26 11:20:42 by mkeerewe         ###   ########.fr       */
+/*   Updated: 2025/10/06 14:37:50 by mkeerewe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,11 @@ void	ft_get_map(char *file, t_program *prog)
 	prog->map->map = map;
 	line = get_next_line(fd);
 	prog->map->map[0] = ft_strdup(line);
+	free (line);
 	while (line != (void *) 0)
 	{
-		read_file(prog, &line, fd, i);
-		i++;
+		read_file(prog, &line, fd, i++);
+		free(line);
 	}
 	prog->map->size.x = ft_strlen_sl(prog->map->map[0]);
 	prog->map->size.y = i - 1;
@@ -104,9 +105,8 @@ int	main(int argc, char *argv[])
 	ft_valid_map(prog.map);
 	prog.move_cnt = 1;
 	ft_new_window(&prog);
-	ft_put_map(&prog);
-	mlx_key_hook(prog.window.win, *ft_key_input, &prog);
-	mlx_hook(prog.window.win, 17, 0, *ft_close, prog.map);
 	mlx_loop_hook(prog.mlx, *ft_update, &prog);
+	mlx_key_hook(prog.window.win, *ft_key_input, &prog);
+	mlx_hook(prog.window.win, 17, 0, *ft_close, &prog);
 	mlx_loop(prog.mlx);
 }

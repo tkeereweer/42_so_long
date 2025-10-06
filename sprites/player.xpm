@@ -165,7 +165,7 @@ static char *result[] = {
 "L. c #EBFAFA",
 "P. c #F2FFFF",
 "I. c #FAFFFF",
-"U. c #FFFFFF",
+"U. c #FFFFFFFF",
 /* pixels */
 "U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.",
 "U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.U.",

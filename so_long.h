@@ -6,7 +6,7 @@
 /*   By: mkeerewe <mkeerewe@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 16:39:42 by mkeerewe          #+#    #+#             */
-/*   Updated: 2025/09/22 15:36:21 by mkeerewe         ###   ########.fr       */
+/*   Updated: 2025/10/06 12:56:10 by mkeerewe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "libft/libft.h"
 # include "get_next_line.h"
-# include <mlx.h>
+# include "minilibx-linux/mlx.h"
 
 typedef struct s_vector
 {
@@ -64,7 +64,7 @@ typedef struct s_sprites
 typedef struct s_window
 {
 	void		*win;
-	t_image		*buffer;
+	t_image		buffer;
 	t_vector	size;
 }	t_window;
 
@@ -88,6 +88,6 @@ void	ft_get_sprites(t_program *prog);
 void	ft_put_map(t_program *prog);
 int		ft_key_input(int key, void *param);
 int		ft_update(void *param);
-int		ft_close(t_map *map);
+int		ft_close(t_program *prog);
 
 #endif

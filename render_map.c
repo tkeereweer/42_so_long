@@ -6,7 +6,7 @@
 /*   By: mkeerewe <mkeerewe@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 11:50:17 by mkeerewe          #+#    #+#             */
-/*   Updated: 2025/09/22 15:25:35 by mkeerewe         ###   ########.fr       */
+/*   Updated: 2025/10/06 14:24:43 by mkeerewe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	draw_image_to_buffer(t_image *dst, t_image *src, int dx, int dy)
 		{
 			color = *(unsigned int *)(src->pixels + y * src->line_size
 					+ x * (src->bits_per_pixel / 8));
-			if (color != 0x00FFFFFF)
+			if (color != 0xFFFFFFFF)
 				*(unsigned int *)(dst->pixels + (dy + y) * dst->line_size
 						+ (dx + x) * (dst->bits_per_pixel / 8)) = color;
 			x++;
@@ -55,7 +55,7 @@ void	ft_put_background(t_program *prog)
 		j = 0;
 		while (prog->window.size.x > 64 * j)
 		{
-			draw_image_to_buffer(prog->window.buffer,
+			draw_image_to_buffer(&(prog->window.buffer),
 				&prog->sprites.img_back, 64 * j, 64 * i);
 			j++;
 		}
@@ -68,16 +68,23 @@ void	ft_put_background(t_program *prog)
 void	ft_map_to_buffer(t_program *prog, int *i, int *j)
 {
 	if (prog->map->map[*i][*j] == 'P')
-		draw_image_to_buffer(prog->window.buffer,
+		draw_image_to_buffer(&(prog->window.buffer),
 			&prog->sprites.img_player, 64 * *j, 64 * *i + 32);
 	else if (prog->map->map[*i][*j] == 'C')
-		draw_image_to_buffer(prog->window.buffer,
+		draw_image_to_buffer(&(prog->window.buffer),
 			&prog->sprites.img_coll, 64 * *j, 64 * *i + 32);
+	else if (prog->map->map[*i][*j] == 'E' && prog->map->player_on_exit == 1)
+	{
+		draw_image_to_buffer(&(prog->window.buffer),
+			&prog->sprites.img_exit, 64 * *j, 64 * *i + 32);
+		draw_image_to_buffer(&(prog->window.buffer),
+			&prog->sprites.img_player, 64 * *j, 64 * *i + 32);
+	}
 	else if (prog->map->map[*i][*j] == 'E')
-		draw_image_to_buffer(prog->window.buffer,
+		draw_image_to_buffer(&(prog->window.buffer),
 			&prog->sprites.img_exit, 64 * *j, 64 * *i + 32);
 	else if (prog->map->map[*i][*j] == '1')
-		draw_image_to_buffer(prog->window.buffer,
+		draw_image_to_buffer(&(prog->window.buffer),
 			&prog->sprites.img_walls, 64 * *j, 64 * *i + 32);
 }
 
@@ -85,16 +92,15 @@ void	ft_put_map(t_program *prog)
 {
 	int		i;
 	int		j;
-	t_image	buffer;
 
 	i = 0;
-	buffer.pointer = mlx_new_image(prog->mlx, prog->window.size.x,
+	prog->window.buffer.pointer = mlx_new_image(prog->mlx, prog->window.size.x,
 			prog->window.size.y);
-	buffer.pixels = mlx_get_data_addr(buffer.pointer,
-			&buffer.bits_per_pixel, &buffer.line_size, &buffer.endian);
-	prog->window.buffer = &buffer;
-	buffer.size.x = prog->window.size.x;
-	buffer.size.y = prog->window.size.y;
+	prog->window.buffer.pixels = mlx_get_data_addr(prog->window.buffer.pointer,
+			&(prog->window.buffer.bits_per_pixel),
+			&(prog->window.buffer.line_size), &(prog->window.buffer.endian));
+	prog->window.buffer.size.x = prog->window.size.x;
+	prog->window.buffer.size.y = prog->window.size.y;
 	ft_put_background(prog);
 	while (prog->window.size.y > 64 * i + 32)
 	{
@@ -107,5 +113,5 @@ void	ft_put_map(t_program *prog)
 		i++;
 	}
 	mlx_put_image_to_window(prog->mlx, prog->window.win,
-		prog->window.buffer->pointer, 0, 0);
+		prog->window.buffer.pointer, 0, 0);
 }

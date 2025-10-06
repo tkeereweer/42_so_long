@@ -9,20 +9,24 @@ SRCS = main.c \
 
 OBJS = $(SRCS:.c=.o)
 
+MLX_DIR = minilibx-linux
+MLX = $(MLX_DIR)/libmlx.a
 LIBFT_DIR = libft
 LIBFT = $(LIBFT_DIR)/libft.a
 
 NAME = so_long
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g -O0 -fsanitize=address
-LINKS = -L/opt/X11/lib -lX11 -lXext -lmlx_Darwin -L$(LIBFT_DIR) -lft -framework OpenGL -framework AppKit
+CFLAGS = -Wall -Wextra -Werror -g
+LINKS = -lX11 -lXext -L$(MLX_DIR) -lmlx -L$(LIBFT_DIR) -lft
 
 all: $(NAME)
 
-$(NAME): $(LIBFT) $(OBJS)
-	$(CC) $(CFLAGS) $(LINKS) $(OBJS) -o $(NAME)
-	dsymutil $@
+$(NAME): $(MLX) $(LIBFT) $(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) $(LINKS) -o $(NAME)
+
+$(MLX):
+	make -C $(MLX_DIR)
 
 $(LIBFT):
 	make -C $(LIBFT_DIR)
@@ -39,5 +43,3 @@ fclean: clean
 re: fclean all
 
 .PHONY: all clean fclean re
-
-# cc -Wall -Wextra -Werror -L/opt/X11/lib -lX11 -lXext -lmlx_Darwin -framework OpenGL -framework AppKit so_long.c -o so_long
