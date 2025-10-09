@@ -6,7 +6,7 @@
 /*   By: mkeerewe <mkeerewe@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 15:20:25 by mkeerewe          #+#    #+#             */
-/*   Updated: 2025/09/26 11:25:13 by mkeerewe         ###   ########.fr       */
+/*   Updated: 2025/10/09 09:37:15 by mkeerewe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,19 @@ void	ft_free_2d(char **strs, t_map *map)
 		i++;
 	}
 	free(strs);
+}
+
+char	**ft_realloc(char **strs, int size)
+{
+	char	**out;
+
+	out = (char **) malloc(size * sizeof(char *));
+	if (out == (void *) 0)
+		return (out);
+	if (strs != (void *) 0)
+		out = (char **) ft_memmove(out, strs, size - sizeof(char *));
+	free(strs);
+	return (out);
 }
 
 t_image	ft_new_sprite(void *mlx, char *path)

@@ -1,25 +1,28 @@
 #! bin/bash
 
 echo "--- Invalid symbols ---"
-./so_long maps/invalid_symbol.ber
+valgrind ./so_long maps/invalid_symbol.ber
 echo ""
 echo "--- Invalid walls ---"
-./so_long maps/invalid_walls.ber
+valgrind ./so_long maps/invalid_walls.ber
 echo ""
 echo "--- Multiple exits ---"
-./so_long maps/multiple_exits.ber
+valgrind ./so_long maps/multiple_exits.ber
 echo ""
 echo "--- Multiple players ---"
-./so_long maps/multiple_players.ber
+valgrind ./so_long maps/multiple_players.ber
 echo ""
 echo "--- No valid path ---"
-./so_long maps/no_valid_path.ber
+valgrind ./so_long maps/no_valid_path.ber
 echo ""
 echo "--- Not a rectangle ---"
-./so_long maps/not_rectangle.ber
+valgrind ./so_long maps/not_rectangle.ber
 echo ""
 echo "--- Zero collectibles ---"
-./so_long maps/zero_collectibles.ber
+valgrind ./so_long maps/zero_collectibles.ber
 echo ""
-echo "--- Valid map ---"
-./so_long maps/map1.ber
+echo "--- Invalid path ---"
+valgrind ./so_long maps/not
+echo ""
+echo "--- Empty map ---"
+valgrind ./so_long maps/empty.ber

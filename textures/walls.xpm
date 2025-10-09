@@ -124,7 +124,7 @@ static char *result[] = {
 "9. c #B0B6D1",
 "0. c #B4BAD4",
 "q. c #B9BFD9",
-"w. c None",
+"w. c #000000",
 /* pixels */
 "w.w.w.w.w.w.w.w.                                      . = 3 5 5 4 4 4 5 5 5 3 = .                               w.w.w.w.w.w.w.w.",
 "w.w.w.w.w.w.w.w.                                      @ ; 4 4 5 4 4 4 4 4 4 4 ; @                               w.w.w.w.w.w.w.w.",

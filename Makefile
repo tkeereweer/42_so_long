@@ -17,7 +17,7 @@ LIBFT = $(LIBFT_DIR)/libft.a
 NAME = so_long
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror
 LINKS = -lX11 -lXext -L$(MLX_DIR) -lmlx -L$(LIBFT_DIR) -lft
 
 all: $(NAME)
@@ -35,9 +35,11 @@ $(LIBFT):
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
+	make clean -C $(LIBFT_DIR)
 	rm -rf $(OBJS)
 
 fclean: clean
+	make fclean -C $(LIBFT_DIR)
 	rm -rf $(NAME)
 
 re: fclean all

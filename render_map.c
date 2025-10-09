@@ -6,7 +6,7 @@
 /*   By: mkeerewe <mkeerewe@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/17 11:50:17 by mkeerewe          #+#    #+#             */
-/*   Updated: 2025/10/06 14:24:43 by mkeerewe         ###   ########.fr       */
+/*   Updated: 2025/10/08 14:35:53 by mkeerewe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	draw_image_to_buffer(t_image *dst, t_image *src, int dx, int dy)
 		{
 			color = *(unsigned int *)(src->pixels + y * src->line_size
 					+ x * (src->bits_per_pixel / 8));
-			if (color != 0xFFFFFFFF)
+			if (color != 0xFFFFFFFF && color != 0xFF000000)
 				*(unsigned int *)(dst->pixels + (dy + y) * dst->line_size
 						+ (dx + x) * (dst->bits_per_pixel / 8)) = color;
 			x++;
@@ -37,11 +37,12 @@ void	draw_image_to_buffer(t_image *dst, t_image *src, int dx, int dy)
 
 void	ft_get_sprites(t_program *prog)
 {
-	prog->sprites.img_back = ft_new_sprite(prog->mlx, "sprites/back_block.xpm");
-	prog->sprites.img_walls = ft_new_sprite(prog->mlx, "sprites/walls.xpm");
-	prog->sprites.img_player = ft_new_sprite(prog->mlx, "sprites/player.xpm");
-	prog->sprites.img_coll = ft_new_sprite(prog->mlx, "sprites/fruit.xpm");
-	prog->sprites.img_exit = ft_new_sprite(prog->mlx, "sprites/exit.xpm");
+	prog->sprites.img_back = ft_new_sprite(prog->mlx,
+			"textures/back_block.xpm");
+	prog->sprites.img_walls = ft_new_sprite(prog->mlx, "textures/walls.xpm");
+	prog->sprites.img_player = ft_new_sprite(prog->mlx, "textures/player.xpm");
+	prog->sprites.img_coll = ft_new_sprite(prog->mlx, "textures/fruit.xpm");
+	prog->sprites.img_exit = ft_new_sprite(prog->mlx, "textures/exit.xpm");
 }
 
 void	ft_put_background(t_program *prog)
@@ -61,31 +62,29 @@ void	ft_put_background(t_program *prog)
 		}
 		i++;
 	}
-	// mlx_set_font(prog->mlx, prog->window.win, "-*-arial-medium-*-*-*-*-*-*-*-*-*-*-*");
-	// mlx_string_put(prog->mlx, prog->window.win, prog->window.size.x / 2, 8, 0x00000000, "Hello");
 }
 
 void	ft_map_to_buffer(t_program *prog, int *i, int *j)
 {
-	if (prog->map->map[*i][*j] == 'P')
-		draw_image_to_buffer(&(prog->window.buffer),
-			&prog->sprites.img_player, 64 * *j, 64 * *i + 32);
-	else if (prog->map->map[*i][*j] == 'C')
-		draw_image_to_buffer(&(prog->window.buffer),
-			&prog->sprites.img_coll, 64 * *j, 64 * *i + 32);
-	else if (prog->map->map[*i][*j] == 'E' && prog->map->player_on_exit == 1)
+	if (prog->map->map[*i][*j] == 'P' && prog->map->player_on_exit == 1)
 	{
 		draw_image_to_buffer(&(prog->window.buffer),
-			&prog->sprites.img_exit, 64 * *j, 64 * *i + 32);
+			&prog->sprites.img_exit, 64 * *j, 64 * *i);
 		draw_image_to_buffer(&(prog->window.buffer),
-			&prog->sprites.img_player, 64 * *j, 64 * *i + 32);
+			&prog->sprites.img_player, 64 * *j, 64 * *i);
 	}
+	else if (prog->map->map[*i][*j] == 'P')
+		draw_image_to_buffer(&(prog->window.buffer),
+			&prog->sprites.img_player, 64 * *j, 64 * *i);
+	else if (prog->map->map[*i][*j] == 'C')
+		draw_image_to_buffer(&(prog->window.buffer),
+			&prog->sprites.img_coll, 64 * *j, 64 * *i);
 	else if (prog->map->map[*i][*j] == 'E')
 		draw_image_to_buffer(&(prog->window.buffer),
-			&prog->sprites.img_exit, 64 * *j, 64 * *i + 32);
+			&prog->sprites.img_exit, 64 * *j, 64 * *i);
 	else if (prog->map->map[*i][*j] == '1')
 		draw_image_to_buffer(&(prog->window.buffer),
-			&prog->sprites.img_walls, 64 * *j, 64 * *i + 32);
+			&prog->sprites.img_walls, 64 * *j, 64 * *i);
 }
 
 void	ft_put_map(t_program *prog)
@@ -102,7 +101,7 @@ void	ft_put_map(t_program *prog)
 	prog->window.buffer.size.x = prog->window.size.x;
 	prog->window.buffer.size.y = prog->window.size.y;
 	ft_put_background(prog);
-	while (prog->window.size.y > 64 * i + 32)
+	while (prog->window.size.y > 64 * i)
 	{
 		j = 0;
 		while (prog->window.size.x > 64 * j)
